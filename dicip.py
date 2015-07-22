@@ -4,10 +4,10 @@
 #  dicip.py
 #  
 # Just a fun scrit I made, after talking with some friends. 
-# It "encrypts" a message by looking up the owrds in a dictionary, and then
+# It "encrypts" a message by looking up the words in a dictionary, and then
 # finds the word on the "oposite side" of the dictionary. it does this for every word, giving 
 # a nonsensicall sentence. It can both encrypt and decrypt.
-# Also uses fuzzy matching to find closest match if word is not found.
+# Also uses fuzzy matching to find closest match if word is not found in dictionary
 #  
 
 
