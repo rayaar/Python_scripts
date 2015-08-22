@@ -5,6 +5,8 @@
 #  and then login to google as them, and install an app on their phone.
 #  A POC to help a friend on his Masters-thesis  
 
+
+
 from selenium import webdriver
 import time
 from ctypes import Structure, windll, c_uint, sizeof, byref
