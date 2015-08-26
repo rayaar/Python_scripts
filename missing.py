@@ -56,7 +56,7 @@ def find_dupes_and_missing():
     #t.start()
     
     #go through all files and folders:
-    for root, dirs, files in os.walk('Folder with series. Aboslute path'):
+    for root, dirs, files in os.walk('Folder with series. Absolute path'):
         series = []
 			
 		#iterate over files:
