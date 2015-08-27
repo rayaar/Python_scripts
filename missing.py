@@ -45,23 +45,23 @@ def get_id(name):
 def find_dupes_and_missing():
 	
 	
-    ignore = ["Series to ignore"]
+    ignore = ["moomi","adventure time with finn and jake","Adventure Time",]
     all_missing = []
     extensionsToCheck = ("mkv", "mp4", "avi")
     missing = []
     #print("iterating files")
-    print "finding missing episodes and removing duplicates"    
+    print "Finding missing episodes and removing duplicates"    
     #make animation:
     #t = threading.Thread(target=animate)
     #t.start()
     
     #go through all files and folders:
-    for root, dirs, files in os.walk('Folder with series. Absolute path'):
+    for root, dirs, files in os.walk('/media/server/serier'):
         series = []
 			
 		#iterate over files:
         for item in files:
-            if str(item).endswith(extensionsToCheck) and "Extra" not in item:
+            if str(item).endswith(extensionsToCheck) and "Extra" not in item and "Mummi" not in item:
                 try:
 					#find show info:
                     guess = guessit.guess_episode_info(item)
@@ -98,12 +98,12 @@ def find_dupes_and_missing():
 						sizer2 = (size2*2)
 					except Exception as e:
 						continue
-
-					sum1 = ((sizer >= size2 - ((25 * size2) / 100.0)) and (sizer <= size2+((35 * size2) / 100.0)))
-					sum2 = ((sizer2 >= size1 - ((20 * size1) / 100.0)) and (sizer2 <= size1+((20 * size1) / 100.0)))
+						
+					#assume if size roughly 2X or more, assume it is a double-episode (highly speculative and could give false negatives)
+					sum1 = (sizer >= size2 - ((25 * size2) / 100.0))
+					sum2 = (sizer2 >= size1 - ((25 * size1) / 100.0))
 					
 					
-					#print sum1
 					###special episode:####
 					if num1 ==0:						
 						continue
@@ -115,10 +115,11 @@ def find_dupes_and_missing():
 					#fjerne:
 					if num1 in nums:
 						nums.remove(num1)
+					
 					#double episode logic:
-					if sum1 and num2 < maks:
+					if sum2 and num2 < maks:
 						nums.remove(num2+1)
-					if sum2 and num1 >= 1 and num1+1 in nums:
+					if sum1 and num1 >= 1 and num1+1 in nums:
 						nums.remove(num1+1)
 					
 					#if last element, remove it:
@@ -135,16 +136,18 @@ def find_dupes_and_missing():
     sys.stdout.flush()
     
     #print missing episodes from the list:
-    print "\n----------------------------------------------------"
-    print "Missing episodes: \n"  
-  
-    for season in missing:
-        print season[0][0],season[0][1]
-        for episodes in season[1]:
-            print episodes,
+    if len(missing) > 0:
+		print "\n----------------------------------------------------"
+		print "Missing episodes: \n"  
+	  
+		for season in missing:
+			print season[0][0],season[0][1]
+			for episodes in season[1]:
+				print episodes,
 
-        print
-
+			print 
+    else:
+		print "No missing episodes found"
 def main():
 	global done
 	try:
@@ -153,14 +156,12 @@ def main():
 		print "############   got controll + c, exiting   ############"
 		
 		done = True
-		time.sleep(2)
 		sys.exit(1)
-	"""except Exception as e:
+	except Exception as e:
 		print "Unexpected error:", e
 		done = True
-		time.sleep(2)
+		#time.sleep(2)
 		sys.exit(1)
-        """
 	return 0
 
 
